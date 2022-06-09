@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.8.0;
 
 
 import {PriceConsumerV3} from "./PriceFeedOracle.sol";
@@ -33,7 +33,7 @@ contract PredictionMarket {
   }
 
   function placeBet(Side _side) external payable {
-    require(electionFinished == false, 'election is finished');
+    require(electionFinished == false, "election is finished");
     // 18 digit number to be compared with donated amount 
     uint256 minimumUSD = 20 * 10 ** 18;
     //is the donated amount less than 50USD?
@@ -44,8 +44,8 @@ contract PredictionMarket {
 
   function withdrawGain() external {
     uint gamblerBet = betsPerGambler[msg.sender][result.winner];
-    require(gamblerBet > 0, 'you do not have any winning bet');  
-    require(electionFinished == true, 'election not finished yet');
+    require(gamblerBet > 0, "you do not have any winning bet");  
+    require(electionFinished == true, "election not finished yet");
     uint gain = gamblerBet + bets[result.loser] * gamblerBet / bets[result.winner];
     betsPerGambler[msg.sender][Side.APC] = 0;
     betsPerGambler[msg.sender][Side.PDP] = 0;
