@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import {PriceConsumerV3} from "./PriceFeedOracle.sol";
 
 contract PredictionMarket {
-  enum Side { APC, PDP }
+  enum Side { APC, PDP, LP }
   struct Result {
     Side winner;
     Side loser;
@@ -49,6 +49,7 @@ contract PredictionMarket {
     uint gain = gamblerBet + bets[result.loser] * gamblerBet / bets[result.winner];
     betsPerGambler[msg.sender][Side.APC] = 0;
     betsPerGambler[msg.sender][Side.PDP] = 0;
+    betsPerGambler[msg.sender][Side.LP] = 0;
     payable(msg.sender).transfer(gain);
   }
 
